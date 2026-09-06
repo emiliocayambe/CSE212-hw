@@ -12,23 +12,23 @@ public static class StandardDeviation {
         Console.WriteLine(StandardDeviation3(numbers)); // Should be 147.322 
     }
 
-    private static double StandardDeviation1(int[] numbers) {
-        var total = 0.0;
-        var count = 0;
-        foreach (var number in numbers) {
-            total += number;
-            count += 1;
-        }
+        private static double StandardDeviation1(int[] numbers) {
+            var total = 0.0;
+            var count = 0;
+            foreach (var number in numbers) {
+                total += number;
+                count += 1;
+            }
 
-        var avg = total / count;
-        var sumSquaredDifferences = 0.0;
-        foreach (var number in numbers) {
-            sumSquaredDifferences += Math.Pow(number - avg, 2);
-        }
+            var avg = total / count;
+            var sumSquaredDifferences = 0.0;
+            foreach (var number in numbers) {
+                sumSquaredDifferences += Math.Pow(number - avg, 2);
+            }
 
-        var variance = sumSquaredDifferences / count;
-        return Math.Sqrt(variance);
-    }
+            var variance = sumSquaredDifferences / count;
+            return Math.Sqrt(variance);
+        }
 
     private static double StandardDeviation2(int[] numbers) {
         var sumSquaredDifferences = 0.0;
