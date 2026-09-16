@@ -13,7 +13,8 @@ public class PersonQueue
     /// <param name="person">The person to add</param>
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        _queue.Add(person); //Corrected the queue behavior from LIFO (Stack) to FIFO (Queue) by replacing Insert(0, person) 
+                            // with Add(person) so new elements are added to the back of the queue.
     }
 
     public Person Dequeue()

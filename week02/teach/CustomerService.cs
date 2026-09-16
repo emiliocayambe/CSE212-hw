@@ -5,30 +5,39 @@
 public class CustomerService {
     public static void Run() {
         // Example code to see what's in the customer service queue:
-        // var cs = new CustomerService(10);
+        //var cs = new CustomerService(10);
         // Console.WriteLine(cs);
 
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 1");
+        // Scenario: Create a customer service queue with an invalid size (0) 
+        // Expected Result: The queue should default to a maximum sixe of 10
 
-        // Defect(s) Found: 
+        Console.WriteLine("Test 1");
+        var cs = new CustomerService(0);
+        Console.WriteLine(cs);
+        // Defect(s) Found: None,The size correctly defaults to 10
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Try to serve a customer when thee queue is completely empty.
+        // Expected Result: AN error message should be displayed indicating the queue is empty.
         Console.WriteLine("Test 2");
-
-        // Defect(s) Found: 
+        var cs2 = new CustomerService(3);
+        cs2.ServeCustomer();
+        // Defect(s) Found: Throws an AargumentOutOfRangeException instead of showing 
+        // a friendly error message, because _queue.RemoveAt(0) executes before 
+        // validating if the queue is empty.
 
         Console.WriteLine("=================");
 
         // Add more Test Cases As Needed Below
+
+        // Test 3
+        // Scenario: Add a customer to the queue and then serve them successfully.
+        // Expected Results: THe 
     }
 
     private readonly List<Customer> _queue = new();

@@ -39,13 +39,23 @@ public class TakingTurnsQueue
         }
         else
         {
+
+            //Fixed the queue logic so that it correctly handles infinite turns (turns <= 0 by re-enqueuing without modifying) 
+            // and decrements finite turns appropriately while only re-enqueuing if turns remain > 0.
+
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+            if (person.Turns <= 0)
             {
-                person.Turns -= 1;
                 _people.Enqueue(person);
             }
-
+            else
+            {
+                person.Turns -= 1;
+                if(person.Turns > 0)
+                {
+                    _people.Enqueue(person);
+                }         
+            }
             return person;
         }
     }
