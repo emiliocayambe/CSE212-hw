@@ -22,7 +22,35 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>(words);
+        var visited = new HashSet<string>();
+        var result = new List<string>();
+
+    foreach (string word in words)
+        {
+            // Reverse the 2-character word (e.g., "am" -> "ma")
+            char[] chartArray = word.ToCharArray();
+            Array.Reverse(chartArray);
+
+            string reversed = new string(chartArray);
+            if (word == reversed || visited.Contains(word))
+            {
+                continue;
+            }    
+        // If the reversed word exists in our original word set
+        if (wordSet.Contains(reversed))
+      {
+                result.Add($"{word} & {reversed}");
+        
+        // Mark both words as visited to avoid adding the reverse pair later
+            visited.Add(word);
+            visited.Add(reversed);
+      }
+
+
+    }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -43,6 +71,23 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            
+            // Ensure the line has at least 4 columns (index 3) to avoid IndexOutOfRangeException
+            if (fields.Length > 3)
+            {
+                // Clean up any extra whitespace from the degree string
+                string degree = fields[3].Trim();
+
+                // If the degree is already in the dictionary, increment its count; otherwise, initialize it to 1
+                if (degrees.ContainsKey(degree))
+                {
+                    degrees[degree]++;
+                }
+                else
+                {
+                    degrees[degree] = 1;
+                }
+            }
         }
 
         return degrees;
@@ -67,7 +112,46 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        
+        // Normalize both words: convert to lowercase and remove spaces
+        string cleanWord1 = word1.ToLower().Replace(" ", "");
+        string cleanWord2 = word2.ToLower().Replace(" ", "");
+
+        // If lengths differ after cleaning, they cannot be anagrams
+        if (cleanWord1.Length != cleanWord2.Length)
+        {
+            return false;
+        }
+
+        // Use a dictionary to count letter frequencies
+        Dictionary<char, int> letterCounts = new Dictionary<char, int>();
+
+        // Populate dictionary with counts from the first word
+        foreach (char c in cleanWord1)
+        {
+            if (letterCounts.ContainsKey(c))
+            {
+                letterCounts[c]++;
+            }
+            else
+            {
+                letterCounts[c] = 1;
+            }
+        }
+
+        // Subtract counts using the second word
+        foreach (char c in cleanWord2)
+        {
+            // If the character is not in the dictionary or its count is already 0, they are not anagrams
+            if (!letterCounts.ContainsKey(c) || letterCounts[c] == 0)
+            {
+                return false;
+            }
+            letterCounts[c]--;
+        }
+
+        // If all checks passed, they are anagrams
+        return true;
     }
 
     /// <summary>
@@ -101,6 +185,29 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        // Check if featureCollection or its Features list is null to avoid runtime exceptions
+        if (featureCollection?.Features == null)
+        {
+            return Array.Empty<string>();
+        }
+
+        List<string> summaries = new List<string>();
+
+        // Iterate through each earthquake feature in the collection
+    foreach (var feature in featureCollection.Features)
+        {
+            // Ensure properties and required values are not null
+            if (feature?.Properties != null)
+            {
+                string place = feature.Properties.Place ?? "Unknown location";
+                double mag = feature.Properties.Mag;
+
+                // Format the description to strictly match what the test expects: " - Mag "
+                summaries.Add($"{place} - Mag {mag}");
+            }
+        }
+
+        // Return the array of summaries
+        return summaries.ToArray();
     }
 }

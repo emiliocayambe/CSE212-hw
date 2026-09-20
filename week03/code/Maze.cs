@@ -33,6 +33,17 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        // Get the boolean array [left, right, up, down] for the current location
+        var allowedDirections = _mazeMap[(_currX, _currY)];
+
+        // Index 0 represents the left direction
+        if (!allowedDirections[0])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If movement is allowed, update the current X coordinate
+        _currX--;
     }
 
     /// <summary>
@@ -42,6 +53,17 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        // Get the boolean array for the current location
+        var allowedDirections = _mazeMap[(_currX, _currY)];
+
+        // Index 1 represents the right direction
+        if (!allowedDirections[1])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If movement is allowed, update the current X coordinate
+        _currX++;
     }
 
     /// <summary>
@@ -51,6 +73,17 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        // Get the boolean array for the current location
+        var allowedDirections = _mazeMap[(_currX, _currY)];
+
+        // Index 2 represents the up direction
+        if (!allowedDirections[2])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If movement is allowed, update the current Y coordinate
+        _currY--;
     }
 
     /// <summary>
@@ -60,6 +93,17 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        // Get the boolean array for the current location
+        var allowedDirections = _mazeMap[(_currX, _currY)];
+
+        // Index 3 represents the down direction
+        if (!allowedDirections[3])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If movement is allowed, update the current Y coordinate
+        _currY++;
     }
 
     public string GetStatus()
